@@ -1,0 +1,7 @@
+# Arquivos executáveis
+bst
+*.out
+
+# Arquivo de compilacao
+*.o
+*.obj
