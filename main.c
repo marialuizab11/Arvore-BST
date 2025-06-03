@@ -38,6 +38,14 @@ int main(int agrc, char * argv[]){
         scanf("%d", &valor);
         printf("%d\n", sucessor(valor, bst));
         break;
+      case 8:
+        scanf("%d", &valor);
+        printf("%d\n", encontraPai(valor, bst));
+        break;
+        
+      case 11:
+        bst = limpar(bst);
+        break;
       case 99:
         return 0;
     }

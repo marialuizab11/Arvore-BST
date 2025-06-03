@@ -74,21 +74,85 @@ int qtdeFolhas(arvore raiz){
   return qtdeFolhas(raiz->esq) + qtdeFolhas(raiz->dir);
 }
 
+arvore encontrarNo(int n, arvore raiz){
+  if(raiz == NULL || raiz->valor == n){
+    return raiz;
+  }
+  
+  if(n < raiz->valor){
+    return encontrarNo(n, raiz->esq);
+  } else {
+    return encontrarNo(n, raiz->dir);
+  }
+}
+
+arvore encontrarMinimo(arvore raiz){
+  while(raiz != NULL && raiz->esq != NULL){
+    raiz = raiz->esq;
+  }
+  return raiz;
+}
+
 t_elem sucessor(int n, arvore raiz){
-  if(raiz == NULL){
+  arvore noProcurado = encontrarNo(n, raiz);
+  if(noProcurado == NULL){
     return -1;
   }
   
-  if(raiz->valor == n){
-    if(raiz->esq != NULL){
-      return raiz->esq->valor;
-    } else{
-      //nao ha sucessor
-      return -1;
-    }
-  } else if(n > raiz->valor){
-    sucessor(n, raiz->esq);
-  } else {
-    sucessor(n, raiz->dir);
+  if(noProcurado->dir != NULL){
+    arvore sucessor = encontrarMinimo(noProcurado->dir);
+    return sucessor->valor;
   }
+  
+  arvore sucessor = NULL;
+  arvore ancestral = raiz;
+  
+  while(ancestral != NULL){
+    if(n < ancestral->valor){
+      sucessor = ancestral;
+      ancestral = ancestral->esq;
+    } else if(n > ancestral->valor){
+      ancestral = ancestral->dir;
+    } else{
+      break;
+    }
+  }
+  
+  if(sucessor != NULL){
+    return sucessor->valor;
+  }
+  return -1;
 }
+
+t_elem encontraPai(int n, arvore raiz){
+  if(raiz == NULL || raiz->valor == n){
+    return -1;
+  }
+  
+  arvore pai = raiz;
+  
+  if(pai->esq != NULL && pai->esq->valor == n){
+    return pai->valor;
+  } else if(pai->dir != NULL && pai->dir->valor == n){
+    return pai->valor;
+  } else {
+    if(n < pai->valor){
+      return encontraPai(n, pai->esq);
+    } else{
+      return encontraPai(n, pai->dir);
+    }
+  }
+  return -1;
+}
+
+arvore limpar(arvore raiz){
+  if(raiz == NULL){
+    return NULL;
+  }
+  raiz->esq = limpar(raiz->esq);
+  raiz->dir = limpar(raiz->dir);
+  
+  free(raiz);
+  return NULL;
+}
+
