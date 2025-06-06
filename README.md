@@ -18,5 +18,6 @@ Esse código permite:
   - Multiplicar todos os nós por um número inteiro
   - Verificar se um número inteiro está ou não na árvore (1 ou 0)
   - Consultar os descendentes de um nó
-  - Verificar a altura
+  - Verificar a altura.
+
 de uma árvore BST
