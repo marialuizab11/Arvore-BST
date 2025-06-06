@@ -42,9 +42,33 @@ int main(int agrc, char * argv[]){
         scanf("%d", &valor);
         printf("%d\n", encontraPai(valor, bst));
         break;
-        
+      case 9:
+        scanf("%d\n", &valor);
+        bst = remover(valor, bst);
+        break;
+      case 10:
+        int a, b;
+        scanf("%d %d", &a, &b);
+        printf("%d\n", somaIntervalo(bst, a, b));
+        break;
       case 11:
         bst = limpar(bst);
+        break;
+      case 12:
+        scanf("%d", &valor);
+        multiplicarPor(bst, valor);
+        break;
+      case 13:
+        scanf("%d", &valor);
+        printf("%d\n", buscar(bst, valor));
+        break;
+      case 14:
+        scanf("%d", &valor);
+        descendentes(bst, valor);
+        printf("\n");
+        break;
+      case 15:
+        printf("%d\n", altura(bst));
         break;
       case 99:
         return 0;

@@ -22,6 +22,11 @@ arvore encontrarMinimo(arvore raiz);
 arvore encontrarNo(int n, arvore raiz); 
 t_elem encontraPai(int n, arvore raiz);
 arvore limpar(arvore raiz);
-int multiplicaPor(int n, arvore raiz);
+arvore remover(t_elem n, arvore raiz);
+t_elem somaIntervalo(arvore raiz, int a, int b);
+void multiplicarPor(arvore raiz, int n);
+int buscar(arvore raiz, int chave);
+void descendentes(arvore raiz, int n);
+int altura(arvore raiz); 
 
 #endif

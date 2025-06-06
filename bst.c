@@ -156,3 +156,105 @@ arvore limpar(arvore raiz){
   return NULL;
 }
 
+arvore remover(t_elem n, arvore raiz){
+  if(raiz == NULL){
+    return NULL;
+  }
+  
+  //encontrar valor
+  if(n < raiz->valor){
+    raiz->esq = remover(n, raiz->esq);
+  } else if(n > raiz->valor){
+    raiz->dir = remover(n, raiz->dir);
+  } else{
+    //encontrou o valor
+    //caso 1: folha (raiz sem filhos)
+    if(raiz->esq == NULL && raiz->dir == NULL){
+      free(raiz);
+      return NULL;
+    } else if(raiz->esq == NULL){
+      //caso 2.1: raiz com filho direito apenas
+      arvore temp = raiz->dir;
+      free(raiz);
+      return temp;
+    } else if(raiz->dir == NULL){
+      //caso 2.2: raiz com filho esquerdo apenas
+      arvore temp = raiz->esq;
+      free(raiz);
+      return temp;
+    } else{
+      //caso 3: raiz com ambos os filhos
+      arvore temp = encontrarMinimo(raiz->dir);
+      raiz->valor = temp->valor;
+      raiz->dir = remover(temp->valor, raiz->dir);
+    }
+  }
+  return raiz;
+}
+
+t_elem somaIntervalo(arvore raiz, int a, int b){
+  if(raiz == NULL){
+    return 0;
+  }
+  
+  if(raiz->valor < a){
+    return somaIntervalo(raiz->dir, a, b);
+  }
+  
+  if(raiz->valor > b){
+    return somaIntervalo(raiz->esq, a, b);
+  }
+  
+  return raiz->valor + somaIntervalo(raiz->esq, a, b) + somaIntervalo(raiz->dir, a, b);
+}
+
+void multiplicarPor(arvore raiz, int n){
+  if(raiz == NULL){
+    return;
+  }
+  
+  multiplicarPor(raiz->esq, n);
+  raiz->valor *= n;
+  multiplicarPor(raiz->dir, n);
+}
+
+int buscar(arvore raiz, int chave){
+  if(raiz == NULL){
+    return 0;
+  }
+  
+  if(chave == raiz->valor){
+    return 1;
+  } else if(chave < raiz->valor){
+    return buscar(raiz->esq, chave);
+  } else{
+    return buscar(raiz->dir, chave);
+  }
+}
+
+void descendentes(arvore raiz, int n){
+  if(raiz == NULL){
+    return;
+  }
+  
+  if(raiz->valor == n){
+    in_order(raiz->esq);
+    in_order(raiz->dir);
+    return;
+  } else if(n < raiz->valor){
+    descendentes(raiz->esq, n);
+  } else{
+    descendentes(raiz->dir, n);
+  }
+}
+
+int altura(arvore raiz){
+  if (raiz == NULL){
+    return 0;
+  }
+  
+  int h_esq = altura(raiz->esq);
+  int h_dir = altura(raiz->dir);
+  
+  return (h_esq > h_dir ? h_esq : h_dir + 1);
+}
